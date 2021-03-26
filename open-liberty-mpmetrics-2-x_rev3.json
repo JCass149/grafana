@@ -7,6 +7,13 @@
       "type": "datasource",
       "pluginId": "prometheus",
       "pluginName": "Prometheus"
+    },
+    {
+      "name": "VAR_MAXHEAPUSAGEPROJECTION",
+      "type": "constant",
+      "label": "Max Heap Usage Projection (hours)",
+      "value": "1",
+      "description": ""
     }
   ],
   "__requires": [
@@ -38,7 +45,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:431",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -55,12 +61,13 @@
   "editable": true,
   "gnetId": 11706,
   "graphTooltip": 0,
-  "iteration": 1587397137288,
+  "id": null,
+  "iteration": 1616761306221,
   "links": [],
   "panels": [
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -83,6 +90,7 @@
           "id": 39,
           "links": [],
           "pageSize": null,
+          "scroll": true,
           "showHeader": true,
           "sort": {
             "col": 4,
@@ -366,7 +374,7 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -780,7 +788,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:157",
               "decimals": 0,
               "format": "percentunit",
               "label": null,
@@ -790,7 +797,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:158",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -811,7 +817,7 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -836,6 +842,7 @@
           "links": [],
           "pageSize": null,
           "pluginVersion": "6.6.1",
+          "scroll": true,
           "showHeader": true,
           "sort": {
             "col": 3,
@@ -1073,7 +1080,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:6383",
               "decimals": null,
               "format": "s",
               "label": null,
@@ -1083,7 +1089,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:6384",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -1285,12 +1290,554 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 3
+      },
+      "id": 122,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "description": "Percentage of calls which resulted in a failure.",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 4
+          },
+          "id": 124,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum by (method)(rate(base_ft_invocations_total{instance=~'$instance', result='exceptionThrown'}${dur})) * 100 \n/ \nsum by (method)(rate(base_ft_invocations_total{instance=~'$instance'}${dur}))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "method: {{method}}",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Failure Rate Over Last $dur Aggregated Over $instance Instance(s)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": "101",
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "columns": [],
+          "datasource": "${DS_PROMETHEUS}",
+          "description": "Percentage of calls which resulted in a failure.\n\nThis graph is showing failures after all fault tolerance processing has taken place (including fallback)",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 4
+          },
+          "id": 128,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "hidden"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "job",
+              "thresholds": [],
+              "type": "hidden",
+              "unit": "short"
+            },
+            {
+              "alias": "Failure Rate %",
+              "colorMode": "value",
+              "colors": [
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(237, 106, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value",
+              "thresholds": [
+                "30",
+                " 70"
+              ],
+              "type": "number",
+              "unit": "percent"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "expr": "topk(5, \nsum without (result, fallback)(rate(base_ft_invocations_total{instance=~'$instance', result='exceptionThrown'}${dur})) * 100 \n/ \nsum without (result, fallback)(rate(base_ft_invocations_total{instance=~'$instance'}${dur})) \n) \n> 0 ",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "title": "Top 5 Most Frequently Failing Methods Over Last $dur",
+          "transform": "table",
+          "type": "table"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "description": "Percentage of method invocations which resulted in the fallback method or handler being called over the past $dur.",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 13
+          },
+          "id": 125,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum by (method)(rate(base_ft_invocations_total{instance=~'$instance', fallback='applied'}${dur})) * 100 \n/ \nsum by (method)(rate(base_ft_invocations_total{instance=~'$instance'}${dur}))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "method: {{method}}",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Fallback Rate Over Last $dur Aggregated Over $instance Instance(s)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": "101",
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "columns": [],
+          "datasource": "${DS_PROMETHEUS}",
+          "description": "Percentage of calls which resulted in the Fallback method or handler being called over the last $dur",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 13
+          },
+          "id": 129,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "hidden"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "job",
+              "thresholds": [],
+              "type": "hidden",
+              "unit": "short"
+            },
+            {
+              "alias": "Fallback Rate %",
+              "colorMode": "value",
+              "colors": [
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(237, 106, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value",
+              "thresholds": [
+                "30",
+                " 70"
+              ],
+              "type": "number",
+              "unit": "percent"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "expr": "topk(5, \nsum without (result, fallback)(rate(base_ft_invocations_total{instance=~'$instance', fallback='applied'}${dur})) * 100 \n/ \nsum without (result, fallback)(rate(base_ft_invocations_total{instance=~'$instance'}${dur})) \n) \n> 0 ",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "title": "Top 5 Methods Most Frequently Applying Fallback Over Last $dur",
+          "transform": "table",
+          "type": "table"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "description": "Percentage of method invocation which retried at least once over the last $dur.",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 22
+          },
+          "id": 126,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum by (method)(rate(base_ft_retry_calls_total{instance=~'$instance', retried='true'}${dur})*100)\n/\nsum by (method)(rate(base_ft_retry_calls_total{instance=~'$instance'}${dur}))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "method: {{method}}",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Retried Rate Over Last $dur Aggregated Over $instance Instance(s)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": "101",
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "columns": [],
+          "datasource": "${DS_PROMETHEUS}",
+          "description": "Percentage of calls which apply at least one Retry over the last $dur.",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 22
+          },
+          "id": 130,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "hidden"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "job",
+              "thresholds": [],
+              "type": "hidden",
+              "unit": "short"
+            },
+            {
+              "alias": "Retry Rate %",
+              "colorMode": "value",
+              "colors": [
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(237, 106, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "mappingType": 1,
+              "pattern": "Value",
+              "thresholds": [
+                "30",
+                " 70"
+              ],
+              "type": "number",
+              "unit": "percent"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "expr": "topk(5, \nsum without (retried, retryResult)(rate(base_ft_retry_calls_total{instance=~'$instance', retried='true'}${dur})) * 100 \n/ \nsum without (retried, retryResult)(rate(base_ft_retry_calls_total{instance=~'$instance'}${dur})) \n) \n> 0 ",
+              "format": "table",
+              "instant": true,
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "title": "Top 5 Methods Most Frequently Applying A Retry Over Last $dur",
+          "transform": "table",
+          "type": "table"
+        }
+      ],
+      "title": "Fault Tolerance",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
       },
       "id": 47,
       "panels": [
@@ -1735,12 +2282,12 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 5
       },
       "id": 48,
       "panels": [
@@ -1753,7 +2300,7 @@
             "h": 6,
             "w": 12,
             "x": 0,
-            "y": 5
+            "y": 71
           },
           "id": 103,
           "pageSize": null,
@@ -1829,7 +2376,7 @@
             "h": 6,
             "w": 12,
             "x": 12,
-            "y": 5
+            "y": 71
           },
           "id": 81,
           "pageSize": null,
@@ -1918,7 +2465,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 11
+            "y": 77
           },
           "hiddenSeries": false,
           "id": 95,
@@ -2008,7 +2555,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 11
+            "y": 77
           },
           "hiddenSeries": false,
           "id": 101,
@@ -2096,7 +2643,7 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 18
+            "y": 84
           },
           "hiddenSeries": false,
           "id": 30,
@@ -2191,7 +2738,7 @@
             "h": 6,
             "w": 12,
             "x": 0,
-            "y": 24
+            "y": 90
           },
           "hiddenSeries": false,
           "id": 27,
@@ -2287,7 +2834,7 @@
             "h": 6,
             "w": 12,
             "x": 12,
-            "y": 24
+            "y": 90
           },
           "hiddenSeries": false,
           "id": 28,
@@ -2383,7 +2930,7 @@
             "h": 6,
             "w": 12,
             "x": 0,
-            "y": 30
+            "y": 96
           },
           "hiddenSeries": false,
           "id": 31,
@@ -2479,7 +3026,7 @@
             "h": 6,
             "w": 12,
             "x": 12,
-            "y": 30
+            "y": 96
           },
           "hiddenSeries": false,
           "id": 29,
@@ -2569,12 +3116,12 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 6
       },
       "id": 49,
       "panels": [
@@ -2779,12 +3326,12 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 7
       },
       "id": 50,
       "panels": [
@@ -2797,7 +3344,7 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 38
+            "y": 73
           },
           "id": 61,
           "pageSize": null,
@@ -2876,7 +3423,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 44
+            "y": 79
           },
           "hiddenSeries": false,
           "id": 37,
@@ -2972,7 +3519,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 51
+            "y": 86
           },
           "hiddenSeries": false,
           "id": 38,
@@ -3061,12 +3608,12 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 8
       },
       "id": 51,
       "panels": [
@@ -3079,7 +3626,7 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 39
+            "y": 74
           },
           "id": 77,
           "pageSize": null,
@@ -3137,10 +3684,11 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 45
+            "y": 80
           },
           "id": 108,
           "pageSize": null,
+          "scroll": true,
           "showHeader": true,
           "sort": {
             "col": 4,
@@ -3226,7 +3774,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 51
+            "y": 86
           },
           "hiddenSeries": false,
           "id": 107,
@@ -3311,12 +3859,12 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 9
       },
       "id": 52,
       "panels": [
@@ -3329,7 +3877,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 61
+            "y": 75
           },
           "id": 43,
           "links": [],
@@ -3420,19 +3968,14 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 22,
+  "schemaVersion": 16,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "allValue": null,
-        "current": {
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
+        "current": {},
         "datasource": "${DS_PROMETHEUS}",
         "definition": "base_cpu_processCpuLoad_percent",
         "hide": 0,
@@ -3457,6 +4000,7 @@
         "allValue": null,
         "current": {
           "selected": true,
+          "tags": [],
           "text": "[10m]",
           "value": "[10m]"
         },
@@ -3644,21 +4188,19 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": "1",
-          "value": "1"
+          "value": "${VAR_MAXHEAPUSAGEPROJECTION}",
+          "text": "${VAR_MAXHEAPUSAGEPROJECTION}"
         },
         "hide": 2,
         "label": "Max Heap Usage Projection (hours)",
         "name": "maxHeapUsageProjection",
         "options": [
           {
-            "selected": true,
-            "text": "1",
-            "value": "1"
+            "value": "${VAR_MAXHEAPUSAGEPROJECTION}",
+            "text": "${VAR_MAXHEAPUSAGEPROJECTION}"
           }
         ],
-        "query": "1",
+        "query": "${VAR_MAXHEAPUSAGEPROJECTION}",
         "skipUrlSync": false,
         "type": "constant"
       },
@@ -3717,10 +4259,7 @@
     ]
   },
   "timezone": "",
-  "title": "Open Liberty (mpMetrics-2.x)",
+  "title": "Open Liberty (mpMetrics-3.x)",
   "uid": "websphere-liberty-m2",
-  "variables": {
-    "list": []
-  },
-  "version": 1
+  "version": 8
 }
