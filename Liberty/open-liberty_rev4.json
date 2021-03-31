@@ -62,7 +62,7 @@
   "gnetId": 11706,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1617112430800,
+  "iteration": 1617177957447,
   "links": [],
   "panels": [
     {
@@ -4258,7 +4258,7 @@
     ]
   },
   "timezone": "",
-  "title": "Liberty",
+  "title": "Open Liberty",
   "uid": "websphere-liberty-m2",
-  "version": 10
+  "version": 11
 }
